@@ -67,29 +67,34 @@ body{font-family:var(--font-body);color:var(--text);display:flex;flex-direction:
 .dv{background:#2ebd8e}.da{background:#e8a020}.dr{background:#c0392b}
 .btn-submit{width:100%;padding:13px;border-radius:var(--radius);background:var(--green-600);color:#fff;border:none;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;transition:background 0.15s}
 .btn-submit:active{background:var(--green-700)}
-.entry-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:8px;display:flex;gap:10px;align-items:flex-start}
+.entry-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;margin-bottom:8px}
 .entry-item.retenido{border-color:#f09595;background:#fff8f8}
 .entry-item.novedad{border-color:#fac775;background:#fffbf4}
+.entry-item.rechazado{border-color:#e0a0a0;background:#fff0f0}
+.entry-top{display:flex;gap:10px;align-items:flex-start}
 .entry-left{flex:1;min-width:0}
 .entry-ref{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
 .entry-meta{font-size:12px;color:var(--text-secondary);line-height:1.6}
 .entry-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
 .entry-qty{font-family:var(--font-mono);font-size:15px;font-weight:500;color:var(--text)}
 .entry-kg-small{font-size:11px;color:var(--text-tertiary);font-family:var(--font-mono)}
+.entry-actions-row{display:flex;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
 .badge-animal{background:var(--green-100);color:var(--green-800)}
 .badge-humana{background:#dbeafe;color:#1e40af}
 .badge-out{background:#fdecea;color:#8b1c1c}
 .badge-approved{background:var(--green-50);color:var(--green-700)}
 .badge-pending{background:#fef3dc;color:#8a5500}
+.badge-rechazado{background:#fdecea;color:#8b1c1c}
 .sem-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
 .sbv{background:#edfaf5;color:#1a5c38}
 .sba{background:#fef3dc;color:#8a5500}
 .sbr{background:#fdecea;color:#8b1c1c}
 .tiquete-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;font-size:11px;font-family:var(--font-mono);background:var(--neutral-100);color:var(--text-secondary);border:1px solid var(--border)}
 .sem-select{font-size:12px;padding:4px 8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--font-mono)}
-.approve-btn{padding:6px 14px;border-radius:var(--radius-sm);background:var(--green-600);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer}
+.approve-btn{flex:1;padding:8px 4px;border-radius:var(--radius-sm);background:var(--green-600);color:#fff;border:none;font-size:12px;font-weight:600;cursor:pointer}
 .approve-btn:disabled{background:var(--neutral-200);color:var(--text-tertiary);cursor:not-allowed}
+.reject-btn{flex:1;padding:8px 4px;border-radius:var(--radius-sm);background:#fdecea;color:#8b1c1c;border:1px solid #f09595;font-size:12px;font-weight:600;cursor:pointer}
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
 .stat-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:5px;font-family:var(--font-mono)}
@@ -109,14 +114,38 @@ tr:last-child td{border-bottom:none}
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--text-tertiary);font-size:13px}
 .empty-icon{font-size:32px;margin-bottom:.5rem;opacity:0.4}
 .divider{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
+.rechazo-nota{font-size:12px;color:#8b1c1c;background:#fff0f0;border:1px solid #f09595;border-radius:var(--radius-sm);padding:6px 10px;margin-top:6px}
 .bottom-nav{height:var(--nav-h);background:var(--green-950);display:flex;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:transparent;cursor:pointer;color:var(--green-400);transition:color 0.15s;padding-bottom:env(safe-area-inset-bottom,0)}
 .nav-btn.active{color:#fff}
 .nav-icon{font-size:22px;line-height:1}
 .nav-label{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;font-family:var(--font-mono)}
+/* Modal rechazo */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:1.5rem;width:100%;max-width:380px}
+.modal-title{font-size:15px;font-weight:600;margin-bottom:.75rem;color:var(--text)}
+.modal-input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;margin-bottom:1rem;font-family:var(--font-body)}
+.modal-input:focus{outline:none;border-color:var(--red)}
+.modal-btns{display:flex;gap:8px}
+.modal-cancel{flex:1;padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;font-size:13px;cursor:pointer;color:var(--text-secondary)}
+.modal-confirm{flex:1;padding:10px;border-radius:var(--radius-sm);border:none;background:var(--red);color:#fff;font-size:13px;font-weight:600;cursor:pointer}
 </style>
 </head>
 <body>
+
+<!-- MODAL RECHAZO -->
+<div class="modal-overlay" id="modal-rechazo">
+  <div class="modal">
+    <div class="modal-title">⚠️ Motivo de no aprobación</div>
+    <input class="modal-input" id="rechazo-motivo" placeholder="Describe el motivo..." maxlength="200"/>
+    <div class="modal-btns">
+      <button class="modal-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="modal-confirm" onclick="confirmarRechazo()">No aprobar</button>
+    </div>
+  </div>
+</div>
+
 <div class="app-header">
   <div class="app-header-logo">
     <strong>ALEN+PRO</strong>
@@ -132,8 +161,8 @@ tr:last-child td{border-bottom:none}
   <button class="role-btn" onclick="setRole('produccion',1)">Producción</button>
   <button class="role-btn" onclick="setRole('dashboard',2)">Dashboard</button>
 </div>
-<div class="app-body">
 
+<div class="app-body">
   <!-- CALIDAD -->
   <div class="section active" id="sec-calidad">
     <div class="mercado-tabs">
@@ -325,70 +354,58 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Datos como objetos con ID como clave — correcto para Firebase
-let inventario = {}; // { id: {...} }
-let movimientos = {}; // { id: {...} }
-
+let inventario = {};
+let movimientos = {};
 const PESOS = {'FSE':50,'TS':null,'TSA':null,'TSB':null,'SPF-05':25,'PTSG':20,'PTSM':15,'PTSP':25,'FSC':50};
 const ROLES = ['calidad','produccion','dashboard'];
 let semActivo = {a:'verde', h:'verde'};
+let pendienteRechazoId = null;
 
 function setSyncState(s, msg){
-  document.getElementById('sync-dot').className = 'sync-dot' + (s==='syncing'?' syncing':s==='error'?' error':'');
+  document.getElementById('sync-dot').className = 'sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');
   document.getElementById('sync-label').textContent = msg;
 }
 
-// Escuchar inventario en tiempo real
+// Guardar movimiento individual en Firebase
+async function guardarMov(m){
+  setSyncState('syncing','Guardando...');
+  try{
+    await set(ref(db,`movimientos/${m.id}`), m);
+    setSyncState('ok', new Date().toLocaleTimeString('es-CO'));
+  }catch(e){ setSyncState('error','Error'); console.error(e); }
+}
+
+// Guardar item de inventario
+async function guardarInv(item){
+  await set(ref(db,`inventario/${item.entradaId}`), item);
+}
+
+// Eliminar item de inventario
+async function eliminarInv(entradaId){
+  await remove(ref(db,`inventario/${entradaId}`));
+}
+
+// Escuchar cambios en tiempo real
 onValue(ref(db,'inventario'), snap => {
   inventario = snap.val() || {};
   renderAll();
 });
-
-// Escuchar movimientos en tiempo real
 onValue(ref(db,'movimientos'), snap => {
   movimientos = snap.val() || {};
   setSyncState('ok', new Date().toLocaleTimeString('es-CO'));
   renderAll();
 });
 
-// Guardar un movimiento individual
-async function guardarMovimiento(m){
-  setSyncState('syncing','Guardando...');
-  try{
-    await set(ref(db, `movimientos/${m.id}`), m);
-    setSyncState('ok', new Date().toLocaleTimeString('es-CO'));
-  }catch(e){ setSyncState('error','Error al guardar'); }
-}
+function movArray(){ return Object.values(movimientos).sort((a,b)=>b.id-a.id); }
+function invArray(){ return Object.values(inventario); }
 
-// Guardar un item de inventario individual
-async function guardarInventarioItem(item){
-  await set(ref(db, `inventario/${item.entradaId}`), item);
-}
-
-// Eliminar item de inventario
-async function eliminarInventarioItem(entradaId){
-  await remove(ref(db, `inventario/${entradaId}`));
-}
-
-// Actualizar inventario completo
-async function guardarInventario(){
-  await set(ref(db,'inventario'), inventario);
-}
-
-// Helpers para convertir objetos a arrays ordenados
-function movArray(){
-  return Object.values(movimientos).sort((a,b) => b.id - a.id);
-}
-function invArray(){
-  return Object.values(inventario);
-}
-
+// ROLES
 window.setRole = function(r, idx){
-  ROLES.forEach(role => {
+  ROLES.forEach(role=>{
     document.getElementById('sec-'+role).classList.remove('active');
     document.getElementById('nav-'+role).classList.remove('active');
   });
-  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-'+r).classList.add('active');
   document.getElementById('nav-'+r).classList.add('active');
   document.querySelectorAll('.role-btn')[idx].classList.add('active');
@@ -397,27 +414,23 @@ window.setRole = function(r, idx){
 };
 
 window.setMercado = function(m){
-  document.getElementById('mt-animal').classList.toggle('active', m==='animal');
-  document.getElementById('mt-humana').classList.toggle('active', m==='humana');
-  document.getElementById('form-animal').style.display = m==='animal'?'block':'none';
-  document.getElementById('form-humana').style.display = m==='humana'?'block':'none';
+  document.getElementById('mt-animal').classList.toggle('active',m==='animal');
+  document.getElementById('mt-humana').classList.toggle('active',m==='humana');
+  document.getElementById('form-animal').style.display=m==='animal'?'block':'none';
+  document.getElementById('form-humana').style.display=m==='humana'?'block':'none';
 };
 
 window.setSem = function(p, v){
-  semActivo[p] = v;
-  const map = {verde:'sv', amarillo:'sa', rojo:'sr'};
-  ['verde','amarillo','rojo'].forEach(c => {
-    document.getElementById(p+'-sem-'+c).className = 'sem-btn' + (c===v?' '+map[c]:'');
+  semActivo[p]=v;
+  const map={verde:'sv',amarillo:'sa',rojo:'sr'};
+  ['verde','amarillo','rojo'].forEach(c=>{
+    document.getElementById(p+'-sem-'+c).className='sem-btn'+(c===v?' '+map[c]:'');
   });
 };
 
 function semBadge(s){
-  const cfg = {
-    verde:{cls:'sbv',dot:'dv',label:'Liberado'},
-    amarillo:{cls:'sba',dot:'da',label:'Con novedad'},
-    rojo:{cls:'sbr',dot:'dr',label:'Retenido'}
-  };
-  const c = cfg[s]||cfg.verde;
+  const cfg={verde:{cls:'sbv',dot:'dv',label:'Liberado'},amarillo:{cls:'sba',dot:'da',label:'Con novedad'},rojo:{cls:'sbr',dot:'dr',label:'Retenido'}};
+  const c=cfg[s]||cfg.verde;
   return `<span class="sem-badge ${c.cls}"><span class="sem-dot ${c.dot}"></span>${c.label}</span>`;
 }
 
@@ -430,128 +443,157 @@ function semSelect(id, cur){
 }
 
 window.cambiarSem = async function(id, s){
-  if(movimientos[id]) movimientos[id].semaforo = s;
-  // Buscar en inventario por entradaId
-  const invItem = invArray().find(x => x.entradaId == id);
-  if(invItem){ invItem.semaforo = s; await guardarInventarioItem(invItem); }
-  await guardarMovimiento(movimientos[id]);
+  if(movimientos[id]){ movimientos[id].semaforo=s; await guardarMov(movimientos[id]); }
+  const invItem=invArray().find(x=>String(x.entradaId)===String(id));
+  if(invItem){ invItem.semaforo=s; await guardarInv(invItem); }
 };
 
-window.updatePesoAnimal = function(){
-  const r = document.getElementById('a-ref').value;
-  const p = document.getElementById('a-peso');
+// PESOS
+window.updatePesoAnimal=function(){
+  const r=document.getElementById('a-ref').value;
+  const p=document.getElementById('a-peso');
   if(r==='FSE'){p.value='50';p.disabled=true;}else{p.value='';p.disabled=false;}
   calcKgAnimal();
 };
-window.calcKgAnimal = function(){
-  const s = parseInt(document.getElementById('a-sacos').value)||0;
-  const p = parseInt(document.getElementById('a-peso').value)||0;
-  document.getElementById('a-total-kg').value = p&&s?(s*p)+' kg':'—';
+window.calcKgAnimal=function(){
+  const s=parseInt(document.getElementById('a-sacos').value)||0;
+  const p=parseInt(document.getElementById('a-peso').value)||0;
+  document.getElementById('a-total-kg').value=p&&s?(s*p)+' kg':'—';
 };
-window.updatePesoHumana = function(){
-  const r = document.getElementById('h-ref').value;
-  const p = PESOS[r];
-  document.getElementById('h-peso').value = p?p+' kg':'—';
+window.updatePesoHumana=function(){
+  const r=document.getElementById('h-ref').value;
+  const p=PESOS[r];
+  document.getElementById('h-peso').value=p?p+' kg':'—';
   calcKgHumana();
 };
-window.calcKgHumana = function(){
-  const r = document.getElementById('h-ref').value;
-  const p = PESOS[r];
-  const s = parseInt(document.getElementById('h-sacos').value)||0;
-  document.getElementById('h-total-kg').value = p&&s?(s*p)+' kg':'—';
+window.calcKgHumana=function(){
+  const r=document.getElementById('h-ref').value;
+  const p=PESOS[r];
+  const s=parseInt(document.getElementById('h-sacos').value)||0;
+  document.getElementById('h-total-kg').value=p&&s?(s*p)+' kg':'—';
 };
-window.actualizarLotes = function(){
-  const r = document.getElementById('s-ref').value;
-  const disp = invArray().filter(i => i.semaforo!=='rojo' && i.ref===r);
-  document.getElementById('s-lote').innerHTML = '<option value="">Seleccionar lote</option>' +
+window.actualizarLotes=function(){
+  const r=document.getElementById('s-ref').value;
+  const disp=invArray().filter(i=>i.semaforo!=='rojo'&&i.ref===r);
+  document.getElementById('s-lote').innerHTML='<option value="">Seleccionar lote</option>'+
     disp.map(l=>`<option value="${l.entradaId}">${l.lote}${l.codigo?' · '+l.codigo:''} (${l.sacos} sacos${l.semaforo==='amarillo'?' ⚠':''})</option>`).join('');
-  document.getElementById('s-kg-teorico').value = '';
-  document.getElementById('s-sacos').value = '';
+  document.getElementById('s-kg-teorico').value='';
+  document.getElementById('s-sacos').value='';
 };
-window.calcKgSalida = function(){
-  const entradaId = document.getElementById('s-lote').value;
-  const inv = inventario[entradaId];
-  const s = parseInt(document.getElementById('s-sacos').value)||0;
-  document.getElementById('s-kg-teorico').value = (inv&&inv.peso&&s)?(s*inv.peso).toLocaleString('es-CO')+' kg':'—';
+window.calcKgSalida=function(){
+  const eid=document.getElementById('s-lote').value;
+  const inv=inventario[eid];
+  const s=parseInt(document.getElementById('s-sacos').value)||0;
+  document.getElementById('s-kg-teorico').value=(inv&&inv.peso&&s)?(s*inv.peso).toLocaleString('es-CO')+' kg':'—';
 };
 
-window.registrarEntrada = async function(tipo){
-  const id = Date.now();
-  let e = {};
+// REGISTRAR ENTRADA
+window.registrarEntrada=async function(tipo){
+  const id=Date.now();
+  let e={};
   if(tipo==='animal'){
-    const refVal = document.getElementById('a-ref').value;
-    const lote = document.getElementById('a-lote').value;
-    const sacos = parseInt(document.getElementById('a-sacos').value)||0;
-    const peso = parseInt(document.getElementById('a-peso').value)||0;
-    const fecha = document.getElementById('a-fecha').value;
-    const obs = document.getElementById('a-obs').value;
+    const refVal=document.getElementById('a-ref').value;
+    const lote=document.getElementById('a-lote').value;
+    const sacos=parseInt(document.getElementById('a-sacos').value)||0;
+    const peso=parseInt(document.getElementById('a-peso').value)||0;
+    const fecha=document.getElementById('a-fecha').value;
+    const obs=document.getElementById('a-obs').value;
     if(!refVal||!lote||!sacos||!peso){alert('Complete referencia, lote, cantidad y peso.');return;}
-    e = {id, tipo:'entrada', mercado:'animal', ref:refVal, lote:'Lote '+String(lote).padStart(2,'0'), codigo:null, sacos, peso, kg:sacos*peso, fecha, obs, semaforo:semActivo['a']||'verde', estado:'pendiente', fechaReg:new Date().toLocaleString('es-CO')};
+    e={id,tipo:'entrada',mercado:'animal',ref:refVal,lote:'Lote '+String(lote).padStart(2,'0'),codigo:null,sacos,peso,kg:sacos*peso,fecha,obs,semaforo:semActivo['a']||'verde',estado:'pendiente',fechaReg:new Date().toLocaleString('es-CO')};
     ['a-ref','a-lote','a-sacos','a-fecha','a-obs'].forEach(f=>document.getElementById(f).value='');
-    document.getElementById('a-total-kg').value=''; document.getElementById('a-peso').value=''; document.getElementById('a-peso').disabled=false;
+    document.getElementById('a-total-kg').value='';
+    document.getElementById('a-peso').value='';
+    document.getElementById('a-peso').disabled=false;
     setSem('a','verde');
-  } else {
-    const refVal = document.getElementById('h-ref').value;
-    const lote = document.getElementById('h-lote').value;
-    const codigo = document.getElementById('h-codigo').value;
-    const sacos = parseInt(document.getElementById('h-sacos').value)||0;
-    const peso = PESOS[refVal]||0;
-    const fecha = document.getElementById('h-fecha').value;
-    const obs = document.getElementById('h-obs').value;
+  }else{
+    const refVal=document.getElementById('h-ref').value;
+    const lote=document.getElementById('h-lote').value;
+    const codigo=document.getElementById('h-codigo').value;
+    const sacos=parseInt(document.getElementById('h-sacos').value)||0;
+    const peso=PESOS[refVal]||0;
+    const fecha=document.getElementById('h-fecha').value;
+    const obs=document.getElementById('h-obs').value;
     if(!refVal||!lote||!sacos){alert('Complete referencia, código de lote y cantidad.');return;}
-    e = {id, tipo:'entrada', mercado:'humana', ref:refVal, lote, codigo, sacos, peso, kg:sacos*peso, fecha, obs, semaforo:semActivo['h']||'verde', estado:'pendiente', fechaReg:new Date().toLocaleString('es-CO')};
+    e={id,tipo:'entrada',mercado:'humana',ref:refVal,lote,codigo,sacos,peso,kg:sacos*peso,fecha,obs,semaforo:semActivo['h']||'verde',estado:'pendiente',fechaReg:new Date().toLocaleString('es-CO')};
     ['h-ref','h-lote','h-codigo','h-sacos','h-fecha','h-obs'].forEach(f=>document.getElementById(f).value='');
-    document.getElementById('h-total-kg').value=''; document.getElementById('h-peso').value='';
+    document.getElementById('h-total-kg').value='';
+    document.getElementById('h-peso').value='';
     setSem('h','verde');
   }
-  await guardarMovimiento(e);
+  await guardarMov(e);
 };
 
-window.aprobarEntrada = async function(id){
-  const m = movimientos[id];
-  if(!m) return;
-  if(m.semaforo==='rojo'){alert('Producto RETENIDO. Calidad debe liberar antes de aprobar.');return;}
-  m.estado = 'aprobado';
-  // Buscar si ya existe en inventario
-  const existe = invArray().find(x => x.ref===m.ref && x.lote===m.lote);
+// APROBAR ENTRADA — guarda movimiento Y crea inventario
+window.aprobarEntrada=async function(id){
+  const m=movimientos[id];
+  if(!m)return;
+  if(m.semaforo==='rojo'){alert('Producto RETENIDO por calidad. No se puede aprobar.');return;}
+  // Actualizar estado del movimiento
+  m.estado='aprobado';
+  // Buscar si ya existe en inventario por ref+lote
+  const existe=invArray().find(x=>x.ref===m.ref&&x.lote===m.lote);
   if(existe){
-    existe.sacos += m.sacos;
-    existe.kg += m.kg;
-    existe.semaforo = m.semaforo;
-    await guardarInventarioItem(existe);
-  } else {
-    const item = {ref:m.ref, lote:m.lote, mercado:m.mercado, sacos:m.sacos, kg:m.kg, peso:m.peso, fecha:m.fecha, codigo:m.codigo, semaforo:m.semaforo, entradaId:m.id};
-    inventario[m.id] = item;
-    await guardarInventarioItem(item);
+    existe.sacos+=m.sacos;
+    existe.kg+=m.kg;
+    existe.semaforo=m.semaforo;
+    await guardarInv(existe);
+  }else{
+    const item={ref:m.ref,lote:m.lote,mercado:m.mercado,sacos:m.sacos,kg:m.kg,peso:m.peso,fecha:m.fecha,codigo:m.codigo,semaforo:m.semaforo,entradaId:m.id};
+    inventario[m.id]=item;
+    await guardarInv(item);
   }
-  await guardarMovimiento(m);
+  // Guardar movimiento con estado aprobado — CLAVE para que persista
+  await guardarMov(m);
 };
 
-window.registrarSalida = async function(){
-  const entradaId = document.getElementById('s-lote').value;
-  const refVal = document.getElementById('s-ref').value;
-  const sacos = parseInt(document.getElementById('s-sacos').value)||0;
-  const kgB = parseFloat(document.getElementById('s-kg-bascula').value)||0;
-  const tiquete = document.getElementById('s-tiquete').value.trim();
-  const fecha = document.getElementById('s-fecha').value;
-  const destino = document.getElementById('s-destino').value;
-  if(!refVal||!entradaId||!sacos){alert('Complete referencia, lote y sacos.');return;}
+// RECHAZAR ENTRADA
+window.rechazarEntrada=function(id){
+  pendienteRechazoId=id;
+  document.getElementById('rechazo-motivo').value='';
+  document.getElementById('modal-rechazo').classList.add('open');
+};
+window.cerrarModal=function(){
+  document.getElementById('modal-rechazo').classList.remove('open');
+  pendienteRechazoId=null;
+};
+window.confirmarRechazo=async function(){
+  const motivo=document.getElementById('rechazo-motivo').value.trim();
+  if(!motivo){alert('Escribe el motivo del rechazo.');return;}
+  const m=movimientos[pendienteRechazoId];
+  if(!m){cerrarModal();return;}
+  m.estado='rechazado';
+  m.motivoRechazo=motivo;
+  m.fechaRechazo=new Date().toLocaleString('es-CO');
+  await guardarMov(m);
+  cerrarModal();
+};
+
+// SALIDA
+window.registrarSalida=async function(){
+  const eid=document.getElementById('s-lote').value;
+  const refVal=document.getElementById('s-ref').value;
+  const sacos=parseInt(document.getElementById('s-sacos').value)||0;
+  const kgB=parseFloat(document.getElementById('s-kg-bascula').value)||0;
+  const tiquete=document.getElementById('s-tiquete').value.trim();
+  const fecha=document.getElementById('s-fecha').value;
+  const destino=document.getElementById('s-destino').value;
+  if(!refVal||!eid||!sacos){alert('Complete referencia, lote y sacos.');return;}
   if(!tiquete){alert('El número de tiquete es obligatorio.');return;}
   if(!fecha){alert('Seleccione la fecha de despacho.');return;}
-  const inv = inventario[entradaId];
+  const inv=inventario[eid];
   if(!inv||inv.sacos<sacos){alert('Stock insuficiente. Disponible: '+(inv?inv.sacos:0)+' sacos.');return;}
   if(inv.semaforo==='rojo'){alert('Producto retenido. No se puede despachar.');return;}
-  const kgT = sacos*(inv.peso||0);
-  inv.sacos -= sacos;
-  inv.kg -= kgT;
-  const salida = {id:Date.now(), tipo:'salida', ref:refVal, lote:inv.lote, sacos, kgTeorico:kgT, kgBascula:kgB, tiquete, fechaDespacho:fecha, destino, estado:'salida', mercado:inv.mercado, codigo:inv.codigo, semaforo:inv.semaforo, fechaReg:new Date().toLocaleString('es-CO')};
+  const kgT=sacos*(inv.peso||0);
+  inv.sacos-=sacos;
+  inv.kg-=kgT;
+  const salida={id:Date.now(),tipo:'salida',ref:refVal,lote:inv.lote,sacos,kgTeorico:kgT,kgBascula:kgB,tiquete,fechaDespacho:fecha,destino,estado:'salida',mercado:inv.mercado,codigo:inv.codigo,semaforo:inv.semaforo,fechaReg:new Date().toLocaleString('es-CO')};
   if(inv.sacos<=0){
-    await eliminarInventarioItem(entradaId);
-    delete inventario[entradaId];
-  } else {
-    await guardarInventarioItem(inv);
+    await eliminarInv(eid);
+    delete inventario[eid];
+  }else{
+    await guardarInv(inv);
   }
-  await guardarMovimiento(salida);
+  await guardarMov(salida);
   ['s-ref','s-sacos','s-kg-bascula','s-tiquete','s-destino'].forEach(f=>document.getElementById(f).value='');
   document.getElementById('s-lote').innerHTML='<option>Ref. primero</option>';
   document.getElementById('s-kg-teorico').value='';
@@ -562,75 +604,87 @@ window.registrarSalida = async function(){
 function renderAll(){ renderCalidad(); renderProduccion(); renderDashboard(); }
 
 function renderCalidad(){
-  const entradas = movArray().filter(m=>m.tipo==='entrada');
-  document.getElementById('lista-calidad').innerHTML = entradas.length
-    ? entradas.map(m=>{
-        const cls = m.semaforo==='rojo'?' retenido':m.semaforo==='amarillo'?' novedad':'';
-        const cod = m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
-        return `<div class="entry-item${cls}">
+  const entradas=movArray().filter(m=>m.tipo==='entrada');
+  document.getElementById('lista-calidad').innerHTML=entradas.length
+    ?entradas.map(m=>{
+      const cls=m.semaforo==='rojo'?' retenido':m.semaforo==='amarillo'?' novedad':m.estado==='rechazado'?' rechazado':'';
+      const cod=m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
+      const estadoBadge=m.estado==='aprobado'?'<span class="badge badge-approved">✓ Aprobado</span>':
+        m.estado==='rechazado'?'<span class="badge badge-rechazado">✗ No aprobado</span>':
+        '<span class="badge badge-pending">Pendiente</span>';
+      const rechazoNota=m.estado==='rechazado'&&m.motivoRechazo?`<div class="rechazo-nota">⚠️ Motivo: ${m.motivoRechazo}</div>`:'';
+      return `<div class="entry-item${cls}">
+        <div class="entry-top">
           <div class="entry-left">
             <div class="entry-ref">${m.ref} — ${m.lote}${cod}</div>
             <div class="entry-meta">${m.fechaReg}<br>${m.fecha?'Fab: '+m.fecha+'<br>':''}${m.obs?'<em>'+m.obs+'</em><br>':''}
-              <span class="badge badge-${m.mercado}">${m.mercado==='animal'?'Animal':'Humana'}</span>&nbsp;${semBadge(m.semaforo)}<br>
-              <span style="font-size:11px;color:var(--text-tertiary)">Cambiar: </span>${semSelect(m.id,m.semaforo)}
+              <span class="badge badge-${m.mercado}">${m.mercado==='animal'?'Animal':'Humana'}</span>&nbsp;${semBadge(m.semaforo)}&nbsp;${estadoBadge}
+              ${m.estado==='pendiente'?'<br><span style="font-size:11px;color:var(--text-tertiary)">Cambiar estado: </span>'+semSelect(m.id,m.semaforo):''}
             </div>
           </div>
           <div class="entry-right">
             <div class="entry-qty">${m.sacos} sacos</div>
             <div class="entry-kg-small">${m.kg.toLocaleString('es-CO')} kg</div>
           </div>
-        </div>`;}).join('')
-    : '<div class="empty"><div class="empty-icon">📋</div>Sin entradas aún</div>';
+        </div>
+        ${rechazoNota}
+      </div>`;}).join('')
+    :'<div class="empty"><div class="empty-icon">📋</div>Sin entradas aún</div>';
 }
 
 function renderProduccion(){
-  const pendientes = movArray().filter(m=>m.tipo==='entrada'&&m.estado==='pendiente');
-  const retenidos = pendientes.filter(m=>m.semaforo==='rojo').length;
-  let html = '';
-  if(retenidos) html += `<div class="banner banner-red">🔒 ${retenidos} entrada(s) retenida(s) por calidad.</div>`;
-  if(pendientes.length) html += `<div class="banner banner-green">⚠️ ${pendientes.length} entrada(s) pendientes de aprobación.</div>`;
-  html += pendientes.length ? pendientes.map(m=>{
-    const cls = m.semaforo==='rojo'?' retenido':m.semaforo==='amarillo'?' novedad':'';
-    const bloq = m.semaforo==='rojo';
-    const cod = m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
+  const pendientes=movArray().filter(m=>m.tipo==='entrada'&&m.estado==='pendiente');
+  const retenidos=pendientes.filter(m=>m.semaforo==='rojo').length;
+  let html='';
+  if(retenidos) html+=`<div class="banner banner-red">🔒 ${retenidos} entrada(s) retenida(s) por calidad.</div>`;
+  if(pendientes.length) html+=`<div class="banner banner-green">⚠️ ${pendientes.length} entrada(s) pendientes de revisión.</div>`;
+  html+=pendientes.length?pendientes.map(m=>{
+    const cls=m.semaforo==='rojo'?' retenido':m.semaforo==='amarillo'?' novedad':'';
+    const bloq=m.semaforo==='rojo';
+    const cod=m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
     return `<div class="entry-item${cls}">
-      <div class="entry-left">
-        <div class="entry-ref">${m.ref} — ${m.lote}${cod}</div>
-        <div class="entry-meta">${m.fechaReg}${m.fecha?'<br>Fab: '+m.fecha:''}${m.obs?'<br><em>'+m.obs+'</em>':''}<br>
-          <span class="badge badge-${m.mercado}">${m.mercado==='animal'?'Animal':'Humana'}</span>&nbsp;${semBadge(m.semaforo)}
+      <div class="entry-top">
+        <div class="entry-left">
+          <div class="entry-ref">${m.ref} — ${m.lote}${cod}</div>
+          <div class="entry-meta">${m.fechaReg}${m.fecha?'<br>Fab: '+m.fecha:''}${m.obs?'<br><em>'+m.obs+'</em>':''}<br>
+            <span class="badge badge-${m.mercado}">${m.mercado==='animal'?'Animal':'Humana'}</span>&nbsp;${semBadge(m.semaforo)}
+          </div>
+        </div>
+        <div class="entry-right">
+          <div class="entry-qty">${m.sacos} sacos</div>
+          <div class="entry-kg-small">${m.kg.toLocaleString('es-CO')} kg</div>
         </div>
       </div>
-      <div class="entry-right">
-        <div class="entry-qty">${m.sacos} sacos</div>
-        <div class="entry-kg-small">${m.kg.toLocaleString('es-CO')} kg</div>
+      <div class="entry-actions-row">
         <button class="approve-btn" onclick="aprobarEntrada(${m.id})" ${bloq?'disabled':''}>
           ${bloq?'🔒 Retenido':'✓ Aprobar'}
         </button>
+        <button class="reject-btn" onclick="rechazarEntrada(${m.id})">✗ No aprobar</button>
       </div>
     </div>`;}).join('')
-    : '<div class="empty"><div class="empty-icon">✅</div>Sin pendientes</div>';
-  document.getElementById('lista-produccion').innerHTML = html;
-  const disp = invArray().filter(i=>i.semaforo!=='rojo');
-  const refs = [...new Set(disp.map(i=>i.ref))];
-  const sRef = document.getElementById('s-ref');
-  const curRef = sRef.value;
-  sRef.innerHTML = '<option value="">Seleccionar</option>' + refs.map(r=>`<option value="${r}"${r===curRef?' selected':''}>${r}</option>`).join('');
+    :'<div class="empty"><div class="empty-icon">✅</div>Sin pendientes</div>';
+  document.getElementById('lista-produccion').innerHTML=html;
+  const disp=invArray().filter(i=>i.semaforo!=='rojo');
+  const refs=[...new Set(disp.map(i=>i.ref))];
+  const sRef=document.getElementById('s-ref');
+  const curRef=sRef.value;
+  sRef.innerHTML='<option value="">Seleccionar</option>'+refs.map(r=>`<option value="${r}"${r===curRef?' selected':''}>${r}</option>`).join('');
 }
 
 function renderDashboard(){
-  const inv = invArray();
-  const mov = movArray();
-  const ts = inv.reduce((a,i)=>a+i.sacos,0);
-  const tk = inv.reduce((a,i)=>a+i.kg,0);
-  const an = inv.filter(i=>i.mercado==='animal').reduce((a,i)=>a+i.sacos,0);
-  const hu = inv.filter(i=>i.mercado==='humana').reduce((a,i)=>a+i.sacos,0);
-  const re = inv.filter(i=>i.semaforo==='rojo').reduce((a,i)=>a+i.sacos,0);
+  const inv=invArray();
+  const mov=movArray();
+  const ts=inv.reduce((a,i)=>a+i.sacos,0);
+  const tk=inv.reduce((a,i)=>a+i.kg,0);
+  const an=inv.filter(i=>i.mercado==='animal').reduce((a,i)=>a+i.sacos,0);
+  const hu=inv.filter(i=>i.mercado==='humana').reduce((a,i)=>a+i.sacos,0);
+  const re=inv.filter(i=>i.semaforo==='rojo').reduce((a,i)=>a+i.sacos,0);
   document.getElementById('stats-grid').innerHTML=`
     <div class="stat-card"><div class="stat-label">Total sacos</div><div class="stat-val">${ts.toLocaleString('es-CO')}</div><div class="stat-sub">en bodega</div></div>
     <div class="stat-card"><div class="stat-label">Total kg</div><div class="stat-val">${(tk/1000).toFixed(1)}t</div><div class="stat-sub">${tk.toLocaleString('es-CO')} kg</div></div>
     <div class="stat-card"><div class="stat-label">Animal / Humana</div><div class="stat-val">${an}<span style="font-size:16px;color:var(--text-tertiary)"> / ${hu}</span></div><div class="stat-sub">sacos</div></div>
     <div class="stat-card danger"><div class="stat-label">Retenidos</div><div class="stat-val">${re}</div><div class="stat-sub">sacos bloqueados</div></div>`;
-  const tabEl = document.getElementById('tabla-inv');
+  const tabEl=document.getElementById('tabla-inv');
   if(!inv.length){tabEl.innerHTML='<div class="empty"><div class="empty-icon">📦</div>Sin inventario aún</div>';return;}
   tabEl.innerHTML=`<table><thead><tr>
     <th>Ref.</th><th>Lote</th><th>Cód.</th><th>Mdo.</th><th style="text-align:right">Sacos</th><th style="text-align:right">Kg</th><th>Fab.</th><th>Estado</th>
@@ -643,32 +697,38 @@ function renderDashboard(){
     <td style="color:var(--text-tertiary);font-size:11px">${i.fecha||'—'}</td>
     <td>${semBadge(i.semaforo)}</td>
   </tr>`).join('')}</tbody></table>`;
-  const recientes = mov.slice(0,15);
-  document.getElementById('lista-dashboard').innerHTML = recientes.length ? recientes.map(m=>{
-    const es = m.tipo==='salida';
-    const cod = m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
+  const recientes=mov.slice(0,15);
+  document.getElementById('lista-dashboard').innerHTML=recientes.length?recientes.map(m=>{
+    const es=m.tipo==='salida';
+    const cod=m.codigo?`<br><span style="font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary)">${m.codigo}</span>`:'';
+    const estadoBadge=es?'<span class="badge badge-out">Salida</span>':
+      m.estado==='aprobado'?'<span class="badge badge-approved">Entrada aprobada</span>':
+      m.estado==='rechazado'?'<span class="badge badge-rechazado">No aprobado</span>':
+      '<span class="badge badge-pending">Pendiente</span>';
     return `<div class="entry-item">
-      <div class="entry-left">
-        <div class="entry-ref">${m.ref} — ${m.lote}${cod}</div>
-        <div class="entry-meta">
-          ${es?m.fechaDespacho:m.fechaReg}
-          ${es&&m.destino?'<br>→ '+m.destino:''}
-          ${es&&m.tiquete?'<br><span class="tiquete-tag">🏷 Tiquete #'+m.tiquete+'</span>':''}
-          <br><span class="badge ${es?'badge-out':m.estado==='aprobado'?'badge-approved':'badge-pending'}">${es?'Salida':m.estado==='aprobado'?'Entrada aprobada':'Pendiente'}</span>
-          &nbsp;${semBadge(m.semaforo||'verde')}
+      <div class="entry-top">
+        <div class="entry-left">
+          <div class="entry-ref">${m.ref} — ${m.lote}${cod}</div>
+          <div class="entry-meta">
+            ${es?m.fechaDespacho:m.fechaReg}
+            ${es&&m.destino?'<br>→ '+m.destino:''}
+            ${es&&m.tiquete?'<br><span class="tiquete-tag">🏷 Tiquete #'+m.tiquete+'</span>':''}
+            <br>${estadoBadge}&nbsp;${semBadge(m.semaforo||'verde')}
+            ${m.estado==='rechazado'&&m.motivoRechazo?'<br><span style="font-size:11px;color:#8b1c1c">Motivo: '+m.motivoRechazo+'</span>':''}
+          </div>
+        </div>
+        <div class="entry-right">
+          <div class="entry-qty">${es?'-':''}${m.sacos} sacos</div>
+          ${es?`<div class="entry-kg-small">Báscula: ${m.kgBascula?m.kgBascula.toLocaleString('es-CO')+' kg':'—'}</div>
+                <div class="entry-kg-small">Teórico: ${m.kgTeorico?m.kgTeorico.toLocaleString('es-CO')+' kg':'—'}</div>`
+            :`<div class="entry-kg-small">${m.kg.toLocaleString('es-CO')} kg</div>`}
         </div>
       </div>
-      <div class="entry-right">
-        <div class="entry-qty">${es?'-':''}${m.sacos} sacos</div>
-        ${es?`<div class="entry-kg-small">Báscula: ${m.kgBascula?m.kgBascula.toLocaleString('es-CO')+' kg':'—'}</div>
-              <div class="entry-kg-small">Teórico: ${m.kgTeorico?m.kgTeorico.toLocaleString('es-CO')+' kg':'—'}</div>`
-          :`<div class="entry-kg-small">${m.kg.toLocaleString('es-CO')} kg</div>`}
-      </div>
     </div>`;}).join('')
-    : '<div class="empty"><div class="empty-icon">📊</div>Sin movimientos</div>';
+    :'<div class="empty"><div class="empty-icon">📊</div>Sin movimientos</div>';
 }
 
-document.getElementById('s-fecha').value = new Date().toISOString().split('T')[0];
+document.getElementById('s-fecha').value=new Date().toISOString().split('T')[0];
 </script>
 </body>
 </html>
